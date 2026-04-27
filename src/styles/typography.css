@@ -1,0 +1,226 @@
+/* TYPOGRAPHY CSS - USING INTER ONLY */
+
+@layer components {
+
+    /* HERO TITLE — Inter Medium */
+    .hero-title {
+        font-family: var(--font-heading);
+        /* Inter */
+        font-size: 9vw;
+        /* Responsive size */
+        font-weight: 500;
+        /* Medium  */
+        letter-spacing: -0.06em;
+        /* Negative spacing */
+        line-height: 0.95;
+        /* Very tight line-height */
+        font-style: normal;
+        color: #2C2E2A;
+        /* Dark gray */
+    }
+
+    /* HERO TAGLINE — Inter Medium */
+    .hero-tagline {
+        font-family: var(--font-heading);
+        /* Inter */
+        font-size: 1.75rem;
+        /* ~28px */
+        font-weight: 500;
+        /* Medium weight */
+        letter-spacing: -0.06em;
+        /* Negative spacing */
+        line-height: 1.2;
+        /* Slightly more breathing room */
+        font-style: normal;
+        color: #2C2E2A;
+        /* Dark gray - defined here */
+    }
+
+    /* Responsive tagline sizes */
+    @media (min-width: 768px) {
+        .hero-tagline {
+            font-size: 2rem;
+            /* ~32px on tablet */
+        }
+    }
+
+    @media (min-width: 1024px) {
+        .hero-tagline {
+            font-size: 2.25rem;
+            /* ~36px on desktop */
+        }
+    }
+
+    /* HERO EYEBROW — Inter Bold */
+    .hero-eyebrow {
+        font-family: var(--font-heading);
+        /* Inter */
+        font-size: 0.875rem;
+        /* 14px */
+        font-weight: 700;
+        /* Bold - much more prominent */
+        text-transform: uppercase;
+        letter-spacing: 0.15em;
+        color: #2C2E2A;
+        /* Dark gray */
+        line-height: 1.2;
+        margin-bottom: 1rem;
+    }
+
+    /* Responsive eyebrow - slightly larger on desktop */
+    @media (min-width: 768px) {
+        .hero-eyebrow {
+            font-size: 0.9375rem;
+            /* 15px on tablet+ */
+        }
+    }
+
+    /* Responsive eyebrow - slightly larger on desktop */
+    @media (min-width: 768px) {
+        .hero-eyebrow {
+            font-size: 0.9375rem;
+            /* 15px on tablet+ */
+        }
+    }
+
+    /* HERO PARAGRAPH — Inter Regular */
+    .hero-paragraph {
+        font-family: var(--font-heading);
+        @apply text-base md:text-lg leading-relaxed;
+    }
+
+    /* SECTION TITLE — Inter SemiBold */
+    .section-title {
+        font-family: var(--font-heading);
+        @apply text-2xl md:text-3xl font-semibold tracking-tight;
+    }
+
+    /* SECTION EYEBROW — Inter Medium */
+    .section-eyebrow {
+        font-family: var(--font-heading);
+        @apply text-xs font-medium uppercase tracking-[0.2em] text-slate-400;
+    }
+
+    /* SECTION PARAGRAPH — Inter Regular */
+    .section-paragraph {
+        font-family: var(--font-heading);
+        @apply text-sm md:text-base text-slate-400 max-w-2xl;
+    }
+
+    /* CARD TITLE — Inter SemiBold */
+    .card-title {
+        font-family: var(--font-heading);
+        @apply text-lg md:text-xl font-semibold;
+    }
+
+    /* CARD PARAGRAPH — Inter Regular */
+    .card-paragraph {
+        font-family: var(--font-heading);
+        @apply text-sm leading-relaxed;
+    }
+
+    /* CARD LABEL / UI LABEL — Inter Medium */
+    .card-label,
+    .ui-label {
+        font-family: var(--font-heading);
+        @apply text-xs font-medium text-slate-400;
+    }
+
+    /* ========================================
+       BUTTON TYPOGRAPHY
+       ======================================== */
+
+    /* STANDARD BUTTON — Inter SemiBold */
+    .btn-text {
+        font-family: var(--font-heading);
+        /* Inter */
+        font-size: 1.125rem;
+        /* 18px */
+        font-weight: 600;
+        /* SemiBold */
+        letter-spacing: -0.02em;
+        /* Slight negative tracking */
+        line-height: 1;
+        color: inherit;
+        /* Let parent define color */
+    }
+
+    /* CTA BUTTON — Inter SemiBold */
+    .btn-cta-text {
+        font-family: var(--font-heading);
+        /* Inter */
+        font-size: 1.0625rem;
+        /* 17px */
+        font-weight: 600;
+        /* SemiBold */
+        letter-spacing: -0.015em;
+        line-height: 1;
+        color: inherit;
+    }
+
+    /* BUTTON SMALL — Inter Medium */
+    .btn-text-sm {
+        font-family: var(--font-heading);
+        font-size: 0.9375rem;
+        /* 15px */
+        font-weight: 500;
+        /* Medium */
+        letter-spacing: -0.01em;
+        line-height: 1;
+        color: inherit;
+    }
+
+    /* BUTTON LARGE — Inter Bold */
+    .btn-text-lg {
+        font-family: var(--font-heading);
+        font-size: 1.25rem;
+        /* 20px */
+        font-weight: 700;
+        /* Bold */
+        letter-spacing: -0.03em;
+        line-height: 1;
+        color: inherit;
+    }
+
+    /* Responsive button text */
+    @media (min-width: 768px) {
+        .btn-text {
+            font-size: 1.125rem;
+            /* 18px on desktop */
+        }
+
+        .btn-cta-text {
+            font-size: 1.0625rem;
+            /* 17px on desktop */
+        }
+    }
+}
+
+/*
+=======================================================
+FONT SETUP - INTER ONLY
+=======================================================
+
+Inter (--font-heading):
+- 400 (Regular)   → Body text, paragraphs
+- 500 (Medium)    → Hero titles ⭐ KEY, Small buttons, Labels
+- 600 (SemiBold)  → Buttons, emphasis ⭐ PRIMARY BUTTON
+- 700 (Bold)      → Section headings, Large buttons, Eyebrows
+
+=======================================================
+BUTTON USAGE
+=======================================================
+
+Standard Button (Button.tsx):
+<button className="btn-text">Methodology</button>
+
+CTA Button (CTAButton.tsx):
+<button className="btn-cta-text">Get a quote</button>
+
+Small Button:
+<button className="btn-text-sm">Learn more</button>
+
+Large Button:
+<button className="btn-text-lg">Start project</button>
+
+*/

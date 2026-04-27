@@ -1,0 +1,21 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(npm run lint:*)",
+      "Bash(npm run build:*)",
+      "Bash(npx tsc:*)",
+      "Bash(npm install:*)",
+      "Bash(sips -s format jpeg -s formatOptions 70 /Users/pablorojas/Desktop/pablo-webdev/public/images/darkpurple.jpg --out /Users/pablorojas/Desktop/pablo-webdev/public/images/darkpurple.jpg)",
+      "Bash(sips -s format jpeg -s formatOptions 50 /Users/pablorojas/Desktop/pablo-webdev/public/images/darkpurple.jpg --out /Users/pablorojas/Desktop/pablo-webdev/public/images/darkpurple.jpg)",
+      "Bash(sips -g pixelWidth -g pixelHeight /Users/pablorojas/Desktop/pablo-webdev/public/images/darkpurple.jpg)",
+      "Bash(sips -Z 2400 -s format jpeg -s formatOptions 75 /Users/pablorojas/Desktop/pablo-webdev/public/images/darkpurple.jpg --out /Users/pablorojas/Desktop/pablo-webdev/public/images/darkpurple.jpg)",
+      "Bash(sips -Z 2400 -s format jpeg -s formatOptions 75 /Users/pablorojas/Desktop/pablo-webdev/public/images/seopurple.jpg)",
+      "Bash(ls -lh /Users/pablorojas/Desktop/pablo-webdev/public/images/*eopurple*)",
+      "Bash(sips -g pixelWidth -g pixelHeight /Users/pablorojas/Desktop/pablo-webdev/public/images/discovery.jpg)",
+      "Bash(sips --rotate 90 /Users/pablorojas/Desktop/pablo-webdev/public/images/discovery.jpg)",
+      "Bash(sips -Z 2400 -s format jpeg -s formatOptions 75 /Users/pablorojas/Desktop/pablo-webdev/public/images/discovery.jpg)",
+      "Bash(npx next:*)",
+      "Bash(git add *)"
+    ]
+  }
+}

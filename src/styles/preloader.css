@@ -1,0 +1,57 @@
+/* preloader.css */
+/* Preloader overlay styles */
+
+.preloader {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #1a1a1a;
+  pointer-events: none;
+}
+
+.preloader__inner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+.preloader__logo {
+  font-family: var(--font-heading);
+  font-weight: 600;
+  font-size: 1.25rem;
+  letter-spacing: -0.02em;
+  color: #f2f2f7;
+  opacity: 0;
+  animation: preloader-fade-in 0.6s ease forwards 0.2s;
+}
+
+.preloader__bar {
+  width: 120px;
+  height: 1px;
+  background-color: rgba(242, 242, 247, 0.15);
+  overflow: hidden;
+}
+
+.preloader__bar-fill {
+  height: 100%;
+  background-color: #f2f2f7;
+  transform: scaleX(0);
+  transform-origin: left center;
+  animation: preloader-bar 1.4s cubic-bezier(0.4, 0, 0.2, 1) forwards 0.3s;
+}
+
+@keyframes preloader-fade-in {
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes preloader-bar {
+  to {
+    transform: scaleX(1);
+  }
+}

@@ -1,7 +1,18 @@
-@import "tailwindcss";
+/* globals.css */
 
+/* ALL IMPORTS MUST BE FIRST */
+@import "tailwindcss";
+@import "../styles/preloader.css";
+@import "../styles/typography.css";
+@import "../styles/button.css";
+@import "../styles/ctabutton.css";
+@import "../styles/hero.css";
+@import "../styles/pixel-transition.css";
+@import "../styles/grid.css";
+@import "../styles/spacing.css";
+
+/* NOW your other CSS rules */
 :root {
-  --background: #ffffff;
   --foreground: #171717;
 }
 
@@ -20,7 +31,150 @@
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-inter);
+  background-color: #000000;
+}
+
+/* Prevent overscroll bounce and white space */
+html,
+body {
+  overscroll-behavior-y: none;
+  overscroll-behavior-x: none;
+  /* Use clip instead of hidden - hidden creates a scroll container which can block scroll */
+  overflow-x: clip;
+  overflow-y: auto !important;
+}
+
+html {
+  /* Removed height: 100% - can constrain scrolling when combined with overflow */
+  background-color: #000000;
+  /* Ensure touch/scroll events work in Chromium */
+  touch-action: manipulation;
+}
+
+body {
+  min-height: 100vh;
+  position: relative;
+  height: auto !important;
+}
+
+::selection {
+  background-color: #8fd462;
+  color: #0a0a0a;
+}
+
+::-moz-selection {
+  background-color: #8fd462;
+  color: #0a0a0a;
+}
+
+@keyframes page-slide-up {
+  from {
+    transform: translateY(100%);
+  }
+
+  to {
+    transform: translateY(0%);
+  }
+}
+
+@keyframes page-darken-scale-rise {
+  from {
+    filter: brightness(1);
+    transform: scale(1) translateY(0);
+  }
+
+  to {
+    filter: brightness(0.5);
+    transform: scale(0.95) translateY(-25%);
+  }
+}
+
+@keyframes split-flap-top {
+  0% {
+    transform: rotateX(0deg);
+  }
+
+  100% {
+    transform: rotateX(-90deg);
+  }
+}
+
+@keyframes split-flap-bottom {
+  0% {
+    transform: rotateX(90deg);
+  }
+
+  100% {
+    transform: rotateX(0deg);
+  }
+}
+
+@keyframes wind-tile-hinge {
+  0% {
+    transform: rotateX(0deg);
+    filter: brightness(0.97) contrast(1.04);
+  }
+
+  18% {
+    transform: rotateX(calc(var(--wind-back) * 0.28));
+    filter: brightness(0.9) contrast(1.02);
+  }
+
+  43% {
+    transform: rotateX(var(--wind-forward));
+    filter: brightness(1.12) contrast(1.08);
+  }
+
+  67% {
+    transform: rotateX(var(--wind-back));
+    filter: brightness(0.85) contrast(1.03);
+  }
+
+  84% {
+    transform: rotateX(var(--wind-settle));
+    filter: brightness(1.04) contrast(1.06);
+  }
+
+  100% {
+    transform: rotateX(0deg);
+    filter: brightness(0.97) contrast(1.04);
+  }
+}
+
+/* Ensure view transition overlay doesn't block scroll/interaction */
+::view-transition {
+  pointer-events: none;
+}
+
+::view-transition-old(root) {
+  animation: page-darken-scale-rise 1.5s cubic-bezier(0.3, 0.7, 0.05, 1) both;
+  transform-origin: center center;
+  pointer-events: none;
+}
+
+::view-transition-new(root) {
+  animation: page-slide-up 1.5s cubic-bezier(0.3, 0.7, 0.05, 1) both;
+  pointer-events: none;
+}
+
+::view-transition-group(root) {
+  animation-duration: 1.5s;
+  background-color: #000000;
+  pointer-events: none;
+}
+html,
+body,
+html.hide-scrollbar,
+body.hide-scrollbar {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+html::-webkit-scrollbar,
+body::-webkit-scrollbar,
+html.hide-scrollbar::-webkit-scrollbar,
+body.hide-scrollbar::-webkit-scrollbar {
+  width: 0;
+  height: 0;
 }

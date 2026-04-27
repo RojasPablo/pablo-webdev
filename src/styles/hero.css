@@ -1,0 +1,228 @@
+@layer components {
+    /* =================================
+     HERO BASE (matches Hero.tsx)
+     ================================= */
+
+    .hero-container {
+        @apply relative h-screen w-full flex flex-col justify-start pt-32 overflow-hidden;
+    }
+
+    .hero-header {
+        @apply container mx-auto px-6 relative z-10;
+        opacity: var(--hero-header-opacity, 1);
+        width: 100%;
+        max-width: var(--container-max-width, 1280px);
+    }
+
+    /* HOME variant - centered */
+    .hero--home .hero-header {
+        @apply text-center;
+        --hero-grid-size: 82px;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        width: min(calc(100vw - 3rem), 1840px);
+        max-width: none;
+        transform: translate(-50%, -50%) scale(var(--hero-header-scale, 1));
+        transform-origin: center center;
+    }
+
+    .hero--home .hero-title {
+        color: #2c2e2a;
+        font-size: clamp(2rem, 7.2vw, 9rem);
+    }
+
+    .hero--home .hero-tagline {
+        color: #2c2e2a;
+        margin-top: var(--hero-grid-size) !important;
+        line-height: 1;
+    }
+
+    .home-hero-title-grid {
+        display: grid;
+        justify-items: center;
+        row-gap: var(--hero-grid-size);
+    }
+
+    .home-hero-title-grid .hero-title-line {
+        display: flex;
+        align-items: flex-end;
+        justify-content: center;
+        overflow: hidden;
+        min-height: clamp(120px, calc(var(--hero-grid-size) * 2.1), 176px);
+        padding-top: 0.08em;
+        padding-bottom: 0.18em;
+        margin-bottom: -0.18em;
+        line-height: 0.92;
+        box-sizing: border-box;
+    }
+
+    .home-hero-title-grid .hero-title-line:first-child {
+        font-size: clamp(1.8rem, 5.8vw, 7rem);
+        transform: translateY(calc((var(--hero-grid-size) * -0.12) - 5px));
+    }
+
+    .home-hero-title-grid .hero-title-line:nth-child(2) {
+        font-size: clamp(2.2rem, 7.2vw, 9rem);
+    }
+
+    .hero-tagline-animate {
+        opacity: 0;
+        transform: translateY(16px);
+        animation: hero-tagline-rise 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        animation-delay: var(--tagline-delay, 0s);
+    }
+
+    @keyframes hero-tagline-rise {
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    /* PAGE variant - top left */
+    .hero--page .hero-header {
+        @apply text-left pl-3 pr-6;
+        position: relative;
+        transform: scale(var(--hero-header-scale, 1));
+        transform-origin: top left;
+        margin-left: 6rem;
+        margin-right: auto;
+    }
+
+    .services-hero-header {
+        position: absolute !important;
+        top: 50%;
+        left: 50%;
+        width: min(100%, 1500px);
+        margin: 0 !important;
+        padding-left: 1.5rem !important;
+        padding-right: 1.5rem !important;
+        text-align: center !important;
+        transform: translate(-50%, -50%) scale(var(--hero-header-scale, 1)) !important;
+        transform-origin: center center !important;
+    }
+
+    .services-hero-header .hero-title {
+        color: #2c2e2a;
+    }
+
+    .hero-title-animated {
+        display: inline-flex;
+        flex-direction: column;
+        gap: 0.04em;
+    }
+
+    .hero-title-line {
+        display: block;
+        overflow: hidden;
+        white-space: pre;
+        padding-bottom: 0.14em;
+        margin-bottom: -0.14em;
+    }
+
+    .hero-title-char {
+        display: inline-block;
+        transform: translateY(120%);
+        opacity: 0;
+        animation: hero-char-rise 0.7s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        animation-delay: var(--char-delay, 0s);
+    }
+
+    @keyframes hero-char-rise {
+        to {
+            transform: translateY(0);
+            opacity: 1;
+        }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+        .hero-title-char {
+            animation: none;
+            transform: none;
+            opacity: 1;
+        }
+        .hero-tagline-animate {
+            animation: none;
+            transform: none;
+            opacity: 1;
+        }
+    }
+
+    /* Illustration */
+    .hero-illustration {
+        @apply absolute bottom-0 left-0 right-0 h-[45vh] flex items-end pointer-events-none z-10;
+    }
+
+    .hero-background {
+        @apply absolute inset-0 z-0 overflow-hidden;
+    }
+
+    .hero-background video,
+    .hero-background img {
+        @apply h-full w-full object-cover;
+    }
+
+}
+@layer components {
+    .hero-scene {
+        @apply relative w-full;
+    }
+
+    /* Fixed header layer - stays in place, not pushed by scroll */
+    .hero-scene__fixed-header {
+        @apply fixed top-0 left-0 w-full h-screen pointer-events-none;
+        will-change: transform, opacity;
+        z-index: 10;
+    }
+
+    /* Rising sheet behind the hero */
+    .hero-scene__sheet {
+        @apply absolute inset-0 pointer-events-none rounded-t-3xl;
+        will-change: transform;
+        z-index: 1;
+        overflow: hidden;
+    }
+
+
+    .hero-scene__sheetInner {
+        @apply h-full w-full rounded-t-3xl;
+    }
+
+    /* Real next content after the scene (normal flow) */
+    .hero-scene__after {
+        @apply w-full;
+    }
+}
+
+@media (max-width: 1024px) {
+    @layer components {
+        .hero--home .hero-header {
+            --hero-grid-size: 82px;
+            width: min(calc(100vw - 1.5rem), 1840px);
+        }
+
+        .hero--home .hero-title {
+            font-size: clamp(1.8rem, 7.8vw, 5.5rem);
+        }
+
+        .home-hero-title-grid .hero-title-line {
+            min-height: clamp(92px, calc(var(--hero-grid-size) * 1.5), 132px);
+        }
+
+        .home-hero-title-grid .hero-title-line:first-child {
+            font-size: clamp(1.4rem, 5.6vw, 4.2rem);
+            transform: translateY(calc((var(--hero-grid-size) * -0.1) - 5px));
+        }
+
+        .home-hero-title-grid .hero-title-line:nth-child(2) {
+            font-size: clamp(1.8rem, 7.8vw, 5.5rem);
+        }
+
+        .services-hero-header {
+            width: 100%;
+            padding-left: 1rem !important;
+            padding-right: 1rem !important;
+        }
+    }
+}

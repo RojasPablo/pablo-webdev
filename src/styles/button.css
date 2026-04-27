@@ -1,0 +1,322 @@
+/* BUTTON COMPONENT STYLES */
+
+@layer components {
+
+    /* ========================================
+       BASE BUTTON STRUCTURE
+       ======================================== */
+    /* 
+     * Main button container
+     * - inline-flex: Allows button to size to content width, not stretch
+     * - justify-between: Spaces text and icon apart
+     * - gap-4: 16px spacing between elements
+     * - px-6: 24px horizontal padding
+     * - h-16: 64px fixed height
+     * - rounded-[2px]: Very subtle corner softening
+     * - overflow-hidden: Clips animated content
+     * - min-width: 200px: Ensures button doesn't get too narrow
+     * - width: fit-content: Button only as wide as content needs
+     */
+    .btn-base {
+        @apply relative inline-flex items-center justify-between gap-4 px-6 h-16 rounded-[2px] transition-all duration-300 overflow-hidden;
+        min-width: 200px;
+        width: fit-content;
+        font-family: var(--font-heading);
+        font-weight: 500;
+        /* Smooth scale transition for button growing on hover */
+        transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    /* 
+     * Button grows slightly on hover for tactile feedback
+     * scale(1.02) = 2% larger in all directions
+     */
+    .btn-base:hover {
+        transform: scale(1.02);
+    }
+
+    /* ========================================
+       BUTTON VARIANTS (for reference)
+       ======================================== */
+    /* Primary yellow button style */
+    .btn-primary {
+        @apply bg-[#ffed4e] text-gray-900;
+    }
+
+    .btn-primary:hover {
+        @apply bg-[#ffe920];
+    }
+
+    /* Secondary dark button style */
+    .btn-secondary {
+        @apply bg-gray-900 text-white;
+    }
+
+    .btn-secondary:hover {
+        @apply bg-gray-800;
+    }
+
+    /* Outline/ghost button style */
+    .btn-outline {
+        @apply bg-transparent border-2 border-gray-900 text-gray-900;
+    }
+
+    .btn-outline:hover {
+        @apply bg-gray-900 text-white;
+    }
+
+    /* Disabled state - non-interactive */
+    .btn-disabled {
+        @apply opacity-50 cursor-not-allowed pointer-events-none;
+    }
+
+    /* ========================================
+       BUTTON TEXT LABEL
+       ======================================== */
+    /* 
+     * The button text that slides from left to right on hover
+     * 
+     * Timing breakdown:
+     * - Duration: 0.3s (300ms)
+     * - Delay: 0.05s (50ms) - slight delay after icon starts disappearing
+     * - Easing: cubic-bezier(.17, .67, .3, 1.33) - MindMarket's curve
+     *   - .17: Very slow start (gradual acceleration)
+     *   - .67: Quick middle phase
+     *   - .3: Ease into overshoot
+     *   - 1.33: Strong overshoot creates pronounced bounce
+     * 
+     * Result: Text slides right with strong, elegant bounce
+     */
+    .btn-label {
+        position: relative;
+        z-index: 2;
+        font-weight: 400;
+        transition: transform 0.3s cubic-bezier(.17, .67, .3, 1.33) 0.05s;
+    }
+
+    /* ========================================
+       ICON WRAPPER - RIGHT SIDE (DEFAULT STATE)
+       ======================================== */
+    /* 
+     * The icon container for the arrow on the RIGHT
+     * Visible by default, disappears on hover
+     * 
+     * w-10 h-10: 40px × 40px box
+     * 
+     * Transition (when unhovering):
+     * - Duration: 0.15s (150ms) - fast scale down
+     * - Easing: cubic-bezier(0.4, 0, 1, 1) - quick ease-in
+     * 
+     * Animation (when appearing after unhover):
+     * - iconPopIn: Scales from 0 → 1.08 → 1 (subtle pop effect)
+     * - Duration: 0.35s (350ms)
+     * - Easing: cubic-bezier(0.34, 1.1, 0.64, 1) - gentle bounce
+     */
+    .btn-icon-wrapper {
+        @apply w-10 h-10 rounded-full flex items-center justify-center flex-shrink-0;
+        position: relative;
+        z-index: 2;
+        transition: all 0.15s cubic-bezier(0.4, 0, 1, 1);
+        animation: iconPopIn 0.35s cubic-bezier(0.34, 1.1, 0.64, 1);
+    }
+
+    /* ========================================
+       ICON WRAPPER - LEFT SIDE (HOVER STATE)
+       ======================================== */
+    /* 
+     * The icon container for the arrow on the LEFT
+     * Hidden by default (scale: 0, opacity: 0)
+     * Appears on hover using absolute positioning
+     * 
+     * position: absolute; left: 24px;
+     * - Positioned absolutely so it doesn't affect button width
+     * - 24px from left edge
+     * 
+     * Initial state:
+     * - transform: scale(0) - completely shrunk
+     * - opacity: 0 - invisible
+     * 
+     * Transition (when unhovering):
+     * - Both scale and opacity fade out in 0.2s
+     * - Uses quick ease: cubic-bezier(0.4, 0, 1, 1)
+     */
+    .btn-icon-wrapper-left {
+        @apply w-10 h-10 rounded-full flex items-center justify-center flex-shrink-0;
+        position: absolute;
+        z-index: 2;
+        left: 24px;
+        transform: scale(0);
+        opacity: 0;
+        transition: transform 0.2s cubic-bezier(0.4, 0, 1, 1), opacity 0.2s cubic-bezier(0.4, 0, 1, 1);
+    }
+
+    /* ========================================
+       ICON SVG
+       ======================================== */
+    /* 
+     * The arrow (>) icon itself
+     * w-4 h-4: 16px × 16px
+     * Color inherits from parent wrapper
+     */
+    .btn-icon {
+        @apply w-4 h-4 text-gray-900;
+    }
+
+    /* ========================================
+       HOVER ANIMATIONS SEQUENCE
+       ======================================== */
+
+    /* 
+     * STEP 1: Right icon disappears (0-150ms)
+     * ------------------------------------------
+     * Right icon scales down to 0 and fades out instantly
+     * We disable the pop animation during hover with "animation: none"
+     * This happens first and fastest (0.15s)
+     */
+    .btn-base:hover .btn-icon-wrapper {
+        transform: scale(0);
+        opacity: 0;
+        animation: none;
+        /* Prevent pop animation during hover */
+    }
+
+    /* 
+     * STEP 2-3: Text slides right (50-350ms)
+     * ------------------------------------------
+     * After 50ms delay, text starts moving right
+     * Moves 52px to the right with MindMarket's bounce curve
+     * Takes 300ms total (finishes around 350ms)
+     */
+    .btn-base:hover .btn-label {
+        transform: translateX(52px);
+    }
+
+    /* 
+     * STEP 4: Left icon pops in (150-450ms)
+     * ------------------------------------------
+     * Starts at 150ms (after right icon disappears)
+     * Scales from 0 → 1.12 → 1 with pop effect
+     * Takes 300ms (finishes around 450ms)
+     * 
+     * transition-delay: 0.15s
+     * - Waits 150ms after hover starts
+     * 
+     * animation: iconPop 0.3s ... 0.15s
+     * - Runs iconPop animation
+     * - Duration: 300ms
+     * - Delay: 150ms (same as transition-delay)
+     * - Easing: cubic-bezier(0.34, 1.2, 0.64, 1) - strong bounce
+     */
+    .btn-base:hover .btn-icon-wrapper-left {
+        transform: scale(1);
+        opacity: 1;
+        transition-delay: 0.15s;
+        animation: iconPop 0.3s cubic-bezier(0.34, 1.2, 0.64, 1) 0.15s;
+    }
+
+    /* ========================================
+       KEYFRAME ANIMATIONS
+       ======================================== */
+
+    /* 
+     * iconPop - Left icon pop-in animation (ON HOVER)
+     * --------------------------------------------------
+     * Used when left icon appears during hover
+     * Creates satisfying "pop" by overshooting then settling
+     * 
+     * 0% (start): scale(0) - invisible/shrunk
+     * 60% (180ms): scale(1.12) - 12% OVER target size (overshoot)
+     * 100% (300ms): scale(1) - settles at normal size
+     * 
+     * The 60% keyframe at 1.12 creates the "elastic" bounce effect
+     */
+    @keyframes iconPop {
+        0% {
+            transform: scale(0);
+        }
+
+        60% {
+            transform: scale(1.12);
+        }
+
+        100% {
+            transform: scale(1);
+        }
+    }
+
+    /* ========================================
+       STATIC BUTTON VARIANT (NO HOVER SWAP)
+       ======================================== */
+    .btn-static {
+        pointer-events: none;
+    }
+
+    .btn-static:hover {
+        transform: none;
+    }
+
+    .btn-static .btn-icon-wrapper-left {
+        display: none;
+    }
+
+    .btn-static .btn-icon-wrapper {
+        transform: none;
+        opacity: 1;
+        transition: none;
+        animation: none;
+    }
+
+    .btn-static .btn-label {
+        transform: none;
+        transition: none;
+    }
+
+
+    /* 
+     * iconPopIn - Right icon pop-in animation (UNHOVER)
+     * --------------------------------------------------
+     * Used when right icon reappears after unhovering
+     * Gentler bounce than iconPop (1.08 vs 1.12)
+     * 
+     * Creates smooth transition back to default state
+     */
+    @keyframes iconPopIn {
+        0% {
+            transform: scale(0);
+        }
+
+        60% {
+            transform: scale(1.08);
+        }
+
+        100% {
+            transform: scale(1);
+        }
+    }
+
+}
+
+/* ========================================
+   ANIMATION TIMELINE SUMMARY
+   ======================================== */
+/*
+ * ON HOVER (left to right):
+ * -------------------------
+ * 0ms:    Right icon starts scaling down
+ * 50ms:   Text starts sliding right (MindMarket curve)
+ * 150ms:  Right icon fully disappeared
+ * 150ms:  Left icon starts popping in
+ * 350ms:  Text finishes sliding (at 52px)
+ * 450ms:  Left icon finishes popping in
+ * Result: Icon on left, text on right
+ * 
+ * ON UNHOVER (right to left):
+ * ---------------------------
+ * 0ms:    Left icon starts scaling down
+ * 50ms:   Text starts sliding left (MindMarket curve)
+ * 200ms:  Left icon fully disappeared
+ * 200ms:  Right icon starts popping in
+ * 350ms:  Text finishes sliding back to start
+ * 550ms:  Right icon finishes popping in (0.35s)
+ * Result: Back to default - text on left, icon on right
+ */

@@ -1,0 +1,22 @@
+.pixel-transition-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  pointer-events: none;
+  visibility: hidden;
+}
+
+.pixel-transition-grid {
+  display: grid;
+  width: 100%;
+  height: 100%;
+  grid-template-columns: repeat(var(--pt-cols), 1fr);
+  grid-template-rows: repeat(var(--pt-rows), 1fr);
+}
+
+.pixel-transition-cell {
+  background: #111;
+  transform: scaleY(0);
+  transform-origin: top center;
+  will-change: transform;
+}

@@ -1,0 +1,185 @@
+/**
+ * MenuButton Styles
+ * 
+ * Implements a sophisticated metallic rotating gradient border effect
+ * with two counter-rotating layers that create a dynamic shimmer.
+ * 
+ * Key Features:
+ * - Custom CSS property animation for smooth gradient rotation
+ * - Dual-layer conic gradients rotating in opposite directions
+ * - Metallic color palette with strategic opacity for depth
+ * - Static outer border for definition
+ */
+
+/* Define custom property for gradient rotation angle */
+/* This allows us to animate the angle smoothly from 0deg to 360deg */
+@property --gradient-rotate {
+    syntax: "<angle>";
+    initial-value: 0deg;
+    inherits: false;
+}
+
+.menu-button {
+    /* Local custom variables for easy theming */
+    --gradient-rotate: 0deg;
+    --border-width: 0.2rem;
+    /* Thicker border for more prominent metallic ring */
+
+    /* Metallic color palette - bright silver/chrome with golden accents */
+    /* Using RGB with alpha channels for layering effects */
+    --metal-01: rgb(240 245 255 / 1.0);
+    /* Brightest silver/white */
+    --metal-02: rgb(220 225 235 / 1.0);
+    /* Very light silver */
+    --metal-03: rgb(180 190 210 / 1.0);
+    /* Light silver-blue */
+    --metal-04: rgb(140 150 170 / 1.0);
+    /* Mid silver */
+    --metal-05: #c3ff3d;
+    /* Golden accent */
+    --metal-06: #8fd462;
+    /* Warm orange-gold accent */
+
+    /* Base button styling */
+    position: relative;
+    /* Required for ::before pseudo-element positioning */
+    width: 2.5rem;
+    /* 40px */
+    height: 2.5rem;
+    /* 40px */
+    border-radius: 100%;
+    /* Perfect circle */
+    border: var(--border-width) solid transparent;
+    /* Transparent border for gradient */
+    flex-shrink: 0;
+    margin-left: 1.25rem;
+    cursor: pointer;
+
+    /* Stacked backgrounds:
+   * 1. Top layer: Dark gradient background (padding-box)
+   * 2. Bottom layer: Rotating conic gradient (border-box) - shows through transparent border
+   */
+    background:
+        /* Top layer - light fill */
+        #f2f2f7 padding-box,
+        /* Bottom layer - rotating metallic gradient border */
+        conic-gradient(from var(--gradient-rotate),
+            rgb(from var(--metal-01) r g b / 1.0),
+            /* Bright silver - full opacity */
+            rgb(from var(--metal-02) r g b / 1.0),
+            /* Light silver */
+            rgb(from var(--metal-03) r g b / 1.0),
+            /* Silver-blue */
+            rgb(from var(--metal-04) r g b / 0.8),
+            /* Mid-tone */
+            rgb(from var(--metal-05) r g b / 1.0),
+            /* Golden accent */
+            rgb(from var(--metal-06) r g b / 1.0),
+            /* Warm orange-gold */
+            rgb(from var(--metal-03) r g b / 1.0),
+            /* Back to silver */
+            rgb(from var(--metal-01) r g b / 1.0)
+            /* Return to bright */
+        ) border-box;
+
+    /* Rotating gradient animation - 6 second loop */
+    animation: menu-button-gradient-rotate 6s linear infinite;
+
+    /* Center the icon */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    /* Smooth transitions for hover effects */
+    transition: transform 0.2s ease;
+}
+
+/* Hover effect - slight scale up */
+.menu-button:hover {
+    transform: scale(1.05);
+}
+
+/* Active state - slight scale down for tactile feedback */
+.menu-button:active {
+    transform: scale(0.95);
+}
+
+/* Second metallic layer - creates counter-rotating effect */
+.menu-button::before {
+    content: "";
+    position: absolute;
+    /* Extend beyond parent button by border width on all sides */
+    inset: calc(-1 * var(--border-width));
+    z-index: -1;
+    /* Position behind the main button */
+    border-radius: inherit;
+    /* Match parent's circular shape */
+
+    /* Stacked conic gradients:
+   * 1. Top layer: Counter-rotating metallic gradient (padding-box)
+   * 2. Bottom layer: Static gradient for outer border definition (border-box)
+   */
+    background:
+        /* Top layer - counter-rotating metallic gradient */
+        conic-gradient(from var(--gradient-rotate),
+            rgb(from var(--metal-01) r g b / 1.0),
+            rgb(from var(--metal-03) r g b / 1.0),
+            rgb(from var(--metal-02) r g b / 1.0),
+            rgb(from var(--metal-04) r g b / 0.9),
+            rgb(from var(--metal-06) r g b / 1.0),
+            rgb(from var(--metal-05) r g b / 1.0),
+            rgb(from var(--metal-03) r g b / 1.0),
+            rgb(from var(--metal-01) r g b / 1.0)) padding-box,
+        /* Bottom layer - static outer border */
+        conic-gradient(from 0deg,
+            /* Static angle */
+            rgb(from var(--metal-02) r g b / 1.0),
+            rgb(from var(--metal-01) r g b / 1.0),
+            rgb(from var(--metal-03) r g b / 1.0),
+            rgb(from var(--metal-04) r g b / 0.9),
+            rgb(from var(--metal-02) r g b / 1.0),
+            rgb(from var(--metal-03) r g b / 1.0),
+            rgb(from var(--metal-01) r g b / 1.0),
+            rgb(from var(--metal-02) r g b / 1.0)) border-box;
+
+    /* Counter-rotating animation - 4 seconds (different speed for dynamic effect) */
+    /* Reverse direction creates opposing rotation */
+    animation: menu-button-gradient-rotate 4s linear infinite reverse;
+
+    /* Thicker border for the static outer layer to show through */
+    border: 0.25rem solid transparent;
+}
+
+/* Icon styling */
+.menu-icon {
+    width: 1.5rem;
+    /* 24px */
+    height: 1.5rem;
+    /* 24px */
+    color: #141314;
+    position: relative;
+    z-index: 1;
+    /* Ensure icon stays above gradients */
+}
+
+/* Animation keyframes */
+/* Animates the custom --gradient-rotate property from 0deg to 360deg */
+/* This creates the smooth rotating effect on both gradient layers */
+@keyframes menu-button-gradient-rotate {
+    from {
+        --gradient-rotate: 0deg;
+    }
+
+    to {
+        --gradient-rotate: 360deg;
+    }
+}
+
+/* Optional: Pause animation on reduced motion preference */
+@media (prefers-reduced-motion: reduce) {
+
+    .menu-button,
+    .menu-button::before {
+        animation: none;
+    }
+}

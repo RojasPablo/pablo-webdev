@@ -1,0 +1,54 @@
+/* ─── Spacing & Rhythm System ────────────────────────────────────────────── */
+
+:root {
+  /* Scale — base unit 4px */
+  --space-4:  1rem;    /* 16px  */
+  --space-6:  1.5rem;  /* 24px  */
+  --space-8:  2rem;    /* 32px  */
+  --space-12: 3rem;    /* 48px  */
+  --space-16: 4rem;    /* 64px  */
+  --space-24: 6rem;    /* 96px  */
+  --space-32: 8rem;    /* 128px */
+  --space-48: 12rem;   /* 192px */
+
+  /* Semantic gaps */
+  --gap-element:   var(--space-4);   /* 16px  — icon↔label, inline items       */
+  --gap-component: var(--space-8);   /* 32px  — items within a component       */
+  --gap-block:     var(--space-16);  /* 64px  — between cards / content blocks */
+  --gap-section:   var(--space-32);  /* 128px — between major sections         */
+
+  /* Section vertical padding */
+  --section-sm: var(--space-16);  /* 64px  */
+  --section-md: var(--space-24);  /* 96px  */
+  --section-lg: var(--space-32);  /* 128px */
+  --section-xl: var(--space-48);  /* 192px */
+
+  /* Aspect ratios */
+  --ratio-portrait:  3/4;
+  --ratio-square:    1/1;
+  --ratio-landscape: 4/3;
+  --ratio-wide:      16/9;
+  --ratio-cinema:    21/9;
+}
+
+/* ─── Section rhythm ─────────────────────────────────────────────────────── */
+
+.section-sm { padding-block: var(--section-sm); }
+.section-md { padding-block: var(--section-md); }
+.section-lg { padding-block: var(--section-lg); }
+.section-xl { padding-block: var(--section-xl); }
+
+/* ─── Gap utilities ──────────────────────────────────────────────────────── */
+
+.gap-element   { gap: var(--gap-element);   }
+.gap-component { gap: var(--gap-component); }
+.gap-block     { gap: var(--gap-block);     }
+.gap-section   { gap: var(--gap-section);   }
+
+/* ─── Aspect ratio utilities ─────────────────────────────────────────────── */
+
+.ratio-portrait  { aspect-ratio: var(--ratio-portrait);  }
+.ratio-square    { aspect-ratio: var(--ratio-square);    }
+.ratio-landscape { aspect-ratio: var(--ratio-landscape); }
+.ratio-wide      { aspect-ratio: var(--ratio-wide);      }
+.ratio-cinema    { aspect-ratio: var(--ratio-cinema);    }
